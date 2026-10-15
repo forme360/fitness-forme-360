@@ -1,0 +1,33 @@
+"use client";
+import { Activity, CheckCircle2, CircleHelp, Cloud, Dumbbell, HeartPulse, LockKeyhole, Smartphone, Sparkles } from "lucide-react";
+
+type Connector={name:string;mark:string;state:string;description:string};
+const groups:{title:string;Icon:typeof Activity;description:string;providers:Connector[]}[]=[
+ {title:"Phone health hubs",Icon:Smartphone,description:"The broadest route for data that other apps already share with your phone.",providers:[
+  {name:"Apple Health",mark:"AP",state:"Native iPhone app required",description:"Read only the HealthKit categories you approve, with source attribution."},
+  {name:"Android Health Connect",mark:"HC",state:"Native Android app required",description:"Read permitted activity, sleep, and health records from the Android health hub."},
+ ]},
+ {title:"Wearables & devices",Icon:HeartPulse,description:"Direct connections depend on the provider's API, user permission, and sometimes approval.",providers:[
+  {name:"Fitbit",mark:"F",state:"Provider access + OAuth",description:"Potential activity, sleep, and heart-rate imports; access and scopes must be verified."},
+  {name:"Oura Ring",mark:"O",state:"Provider access + OAuth",description:"Potential sleep, readiness, and recovery records, with original dates and units."},
+  {name:"WHOOP",mark:"W",state:"Provider access + OAuth",description:"Potential recovery, sleep, and workout records from an authorized account."},
+  {name:"Withings",mark:"W+",state:"Provider access + OAuth",description:"Potential scale, body measurement, and sleep records from supported devices."},
+  {name:"Garmin Connect",mark:"G",state:"Developer approval required",description:"Garmin's Health API access requires enrollment and approval before implementation."},
+  {name:"Polar",mark:"P",state:"Provider access to verify",description:"Assess approved API access and which workout and wearable fields are available."},
+  {name:"Ultrahuman",mark:"U",state:"Provider access to verify",description:"Assess supported account authorization and data categories before promising sync."},
+ ]},
+ {title:"Training & nutrition apps",Icon:Dumbbell,description:"Imports will retain the original source and review overlapping sessions before combining anything.",providers:[
+  {name:"Strava",mark:"S",state:"OAuth app + import flow",description:"Import authorized activity records; overlapping device workouts stay separate until matched."},
+  {name:"Adidas Running",mark:"AR",state:"API / export route to verify",description:"Check current supported access before offering automatic import."},
+  {name:"Hevy",mark:"H",state:"Provider access to verify",description:"Potential strength sessions, exercises, and sets, subject to an approved data route."},
+  {name:"Cronometer",mark:"C",state:"Provider access to verify",description:"Potential food and micronutrient records; nutrition estimates keep their source labels."},
+ ]},
+ {title:"AI assistant connections",Icon:Sparkles,description:"One health model could be accessed from approved assistant clients through a narrowly scoped connector.",providers:[
+  {name:"ChatGPT",mark:"◎",state:"Future secure connector",description:"Would require an authenticated connector with user-scoped permissions and explicit consent."},
+  {name:"Claude",mark:"✳",state:"Future secure connector",description:"Would require a separate authenticated connector and controlled read/write tools."},
+  {name:"Gemini",mark:"✦",state:"Future secure connector",description:"Would require supported connector access and a scoped authorization flow."},
+  {name:"Grok",mark:"X",state:"Future secure connector",description:"Would require supported connector access and a scoped authorization flow."},
+  {name:"Mistral Le Chat",mark:"M",state:"Future secure connector",description:"Would require supported connector access and a scoped authorization flow."},
+ ]},
+];
+export default function IntegrationsPanel(){return <div className="grid" style={{gridTemplateColumns:"minmax(255px,.72fr) minmax(0,1.28fr)",alignItems:"start"}}><aside className="grid" style={{alignContent:"start",gap:12}}><section className="card"><div className="card-heading"><div><div className="card-title">One connected health record</div><div className="card-kicker">A connector directory, not active sync</div></div><Cloud size={17} color="#72a98a"/></div><p className="subcopy" style={{lineHeight:1.65}}>Choose the sources you use. The app will normalize their records into one timeline while keeping the original source and event identity, so mirrored runs are reviewed instead of counted twice.</p><div className="priority" style={{marginTop:16}}><span className="priority-icon"><LockKeyhole size={13}/></span>Each connection will ask for specific permissions. You can pause or revoke access.</div><div className="priority" style={{marginTop:8}}><span className="priority-icon"><Smartphone size={13}/></span>Phone health hubs require native iPhone or Android capabilities. A web page alone cannot read those private stores.</div><div className="priority" style={{marginTop:8}}><span className="priority-icon"><CircleHelp size={13}/></span>None of the connections shown are active in this build. We will show a connect button only after its secure flow works.</div></section><section className="card"><div className="card-title">How records will flow</div><div className="activity-row"><span>1 · Permission</span><span className="activity-value">You approve each category</span></div><div className="activity-row"><span>2 · Source-aware import</span><span className="activity-value">Provider + timestamp retained</span></div><div className="activity-row"><span>3 · Reconcile overlap</span><span className="activity-value">No blind summing</span></div><div className="activity-row"><span>4 · Unified timeline</span><span className="activity-value">One personal history</span></div></section></aside><div className="integration-directory">{groups.map(group=><section className="integration-section" key={group.title}><h2 className="integration-section-title"><group.Icon size={13}/>{group.title}</h2><p className="card-kicker" style={{margin:"-4px 0 1px",lineHeight:1.45}}>{group.description}</p><div className="integration-grid">{group.providers.map(provider=><article className="card integration-card" key={provider.name}><div className="integration-provider"><span className="provider-mark" aria-hidden="true">{provider.mark}</span><div className="provider-copy"><div className="card-title">{provider.name}</div><span className="provider-state"><CheckCircle2 size={10}/>{provider.state}</span></div></div><p className="subcopy" style={{lineHeight:1.5}}>{provider.description}</p></article>)}</div></section>)}</div></div>}

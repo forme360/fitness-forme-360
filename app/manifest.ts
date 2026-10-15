@@ -1,0 +1,2 @@
+import type { MetadataRoute } from "next";
+export default function manifest(): MetadataRoute.Manifest { return { name:"Forme — Health & Performance", short_name:"Forme", description:"Your personal health and performance operating system", start_url:"/", display:"standalone", background_color:"#061110", theme_color:"#061110", icons:[{src:"/icon.svg",sizes:"any",type:"image/svg+xml",purpose:"any"}] }; }

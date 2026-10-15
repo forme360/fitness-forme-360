@@ -1,0 +1,17 @@
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { ShieldCheck, Users, Activity, FileText } from "lucide-react";
+export default async function AdminDashboard(){
+ const supabase=await createClient();if(!supabase)redirect("/");
+ const {data:{user}}=await supabase.auth.getUser();if(!user)redirect("/");
+ const {data:roles,error:roleError}=await supabase.from("user_roles").select("role").eq("user_id",user.id).eq("role","ADMIN").limit(1);
+ if(roleError||!roles?.length)redirect("/");
+ const [users,active,documents,events]=await Promise.all([
+  supabase.from("profiles").select("id,display_name,created_at,is_active",{count:"exact"}).order("created_at",{ascending:false}).limit(100),
+  supabase.from("profiles").select("id",{count:"exact",head:true}).eq("is_active",true),
+  supabase.from("health_documents").select("id",{count:"exact",head:true}),
+  supabase.from("system_events").select("id,event_type,severity,summary,created_at").order("created_at",{ascending:false}).limit(20),
+ ]);
+ const stats=[{label:"Total users",value:users.count??0,Icon:Users},{label:"Active accounts",value:active.count??0,Icon:Activity},{label:"Health documents",value:documents.count??0,Icon:FileText}];
+ return <main style={{maxWidth:1200,margin:"auto",padding:"36px 24px"}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:26}}><div><div className="eyebrow">FORME · MASTER CONSOLE</div><h1 style={{fontSize:30,margin:"8px 0",letterSpacing:"-1px"}}>Admin dashboard</h1><div className="subcopy">Authorized operations · {user.email}</div></div><div className="demo-pill"><ShieldCheck size={12} style={{verticalAlign:"middle",marginRight:5}}/>Admin access</div></div><div className="grid stats-grid">{stats.map(({label,value,Icon})=><section key={label} className="card stat-card"><div className="stat-top">{label}<Icon size={16}/></div><div className="stat-value">{value}</div></section>)}</div><div className="grid" style={{gridTemplateColumns:"1.2fr .8fr",alignItems:"start",marginTop:14}}><section className="card"><div className="card-title">User management</div><div className="card-kicker" style={{marginBottom:14}}>Profile access is enforced by database RLS. Sensitive records remain separately scoped.</div>{users.data?.length?users.data.map(p=><div className="activity-row" key={p.id}><span>{p.display_name||"Unnamed user"}<small style={{display:"block",color:"#89958c",marginTop:3}}>{p.id}</small></span><span className="activity-value">{p.is_active?"Active":"Inactive"}</span></div>):<p className="subcopy">No users available, or profile access is not configured.</p>}{users.error&&<p className="subcopy">Could not load user profiles.</p>}</section><section className="card"><div className="card-title">System activity</div>{events.data?.length?events.data.map(e=><div className="activity-row" key={e.id}><span>{e.summary}<small style={{display:"block",color:"#89958c",marginTop:3}}>{e.event_type} · {e.severity}</small></span><span className="activity-value">{new Date(e.created_at).toLocaleDateString()}</span></div>):<p className="subcopy">No system events have been recorded.</p>}</section></div><p className="card-kicker" style={{marginTop:18,lineHeight:1.6}}>Admin access currently provides read-only operational visibility. Health access should be granted only to specifically authorized administrators under the organization’s access policy.</p></main>
+}
