@@ -22,10 +22,10 @@ export async function POST(request: Request) {
     if (!data.activity_type) return NextResponse.json({ error: "Choose the activity type before saving." }, { status: 400 });
     result = await supabase.from("training_sessions").insert({ user_id: user.id, activity_type: data.activity_type, duration_minutes: data.duration_minutes, distance_km: data.distance_km, notes: data.training_details ?? data.note, provenance: "USER_PROVIDED", confirmed_at: new Date().toISOString() }).select("id").single();
   } else if (domain === "sleep") {
-    if (data.sleep_duration_minutes === null && data.sleep_quality === null) return NextResponse.json({ error: "Add sleep duration or quality before saving." }, { status: 400 });
-    result = await supabase.from("sleep_logs").insert({ user_id: user.id, sleep_date: new Date().toISOString().slice(0, 10), duration_minutes: data.sleep_duration_minutes, quality: data.sleep_quality, source: "manual_ai", notes: data.note, provenance: "USER_PROVIDED", confirmed_at: new Date().toISOString() }).select("id").single();
+    if (data.sleep_duration_minutes === null && data.sleep_quality === null && !data.note) return NextResponse.json({ error: "Add a sleep note, duration, or quality before saving." }, { status: 400 });
+    result = await supabase.from("sleep_logs").insert({ user_id: user.id, sleep_date: new Date().toISOString().slice(0, 10), duration_minutes: data.sleep_duration_minutes, quality: data.sleep_quality, source: "manual_review", notes: data.note, provenance: "USER_PROVIDED", confirmed_at: new Date().toISOString() }).select("id").single();
   } else if (domain === "recovery") {
-    if ([data.fatigue, data.soreness, data.stress].every(v => v === null)) return NextResponse.json({ error: "Add a recovery value before saving." }, { status: 400 });
+    if ([data.fatigue, data.soreness, data.stress].every(v => v === null) && !data.note) return NextResponse.json({ error: "Add a recovery note or value before saving." }, { status: 400 });
     result = await supabase.from("recovery_logs").insert({ user_id: user.id, fatigue: data.fatigue, soreness: data.soreness, stress: data.stress, notes: data.note, provenance: "USER_PROVIDED" }).select("id").single();
   } else if (domain === "mood") {
     if (data.mood_score === null && data.stress === null && !data.mood_context && !data.note) return NextResponse.json({ error: "Add a mood or context note before saving." }, { status: 400 });

@@ -1,4 +1,4 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import { FlatCompat } from "@eslint/eslintrc";
 const compat = new FlatCompat({ baseDirectory: import.meta.dirname });
-export default defineConfig([...compat.extends("next/core-web-vitals", "next/typescript"), globalIgnores([".next/**", "node_modules/**", "next-env.d.ts"]) ]);
+export default defineConfig([...compat.extends("next/core-web-vitals", "next/typescript"), globalIgnores([".next/**", "node_modules/**", "fitness-forme-360/**", "next-env.d.ts"]) ]);

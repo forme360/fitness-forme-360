@@ -7,7 +7,7 @@ export const ExtractionProposal = z.object({
   event_type: z.string().min(1).max(60),
   corrected_understanding: z.string().max(1000),
   user_facing_summary: z.string().max(1000),
-  confidence: z.number().min(0).max(1),
+  confidence: z.number().min(0).max(1).nullable(),
   requires_confirmation: z.literal(true),
   data: z.object({
     meal_type: z.enum(["breakfast", "lunch", "dinner", "snack", "other"]).nullable(),
