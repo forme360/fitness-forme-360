@@ -14,7 +14,7 @@ Open <http://localhost:3000>. Without credentials, the app runs in demo mode, sh
 ## Set up Supabase
 
 1. Create a Supabase project and copy `.env.example` to `.env.local`.
-2. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+2. Set `NEXT_PUBLIC_FORME360_SUPABASE_URL` and `NEXT_PUBLIC_FORME360_SUPABASE_PUBLISHABLE_KEY` for the Forme360 Supabase project. Existing local setups can continue using `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` as fallback names.
 3. Apply migrations in order: `202610060001_initial_schema.sql`, `202610070001_integrations_ingestion.sql`, and `202610080001_health_model_plan_engine.sql`.
 4. Enable email/password authentication and configure recovery redirect URLs.
 5. `OPENAI_API_KEY` is optional. Without it, AI Coach uses a limited local rules parser for clearly stated common foods, activities, sleep notes, mood notes, and weight; this does not call an external AI service or estimate nutrition. Add `OPENAI_API_KEY` to enable broader language interpretation and plan drafts. `OPENAI_MODEL` is optional.
