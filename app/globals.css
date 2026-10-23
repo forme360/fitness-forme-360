@@ -72,21 +72,19 @@ html[data-theme="glow"] .provider-state{border-color:#205c49;color:#7ceac0}
 /* Mobile navigation keeps the most-used actions visible and exposes every area in a drawer. */
 .mobile-topbrand{display:none}
 .topbar-leading{display:flex;align-items:center;min-width:0}
-.mobile-menu-button{display:none}
 @media(max-width:680px){
  .shell{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
- .topbar-leading{gap:10px}
- .mobile-menu-button{display:grid;place-items:center;flex:none;width:36px;height:36px;border:1px solid var(--line);border-radius:10px;background:var(--surface,#fff);color:var(--ink)}
+ .topbar-leading{gap:0}
  .mobile-topbrand{display:flex;align-items:center;gap:7px;font-weight:700;font-size:14px}
  .mobile-topbrand .brand-mark{width:27px;height:27px;border-radius:9px;font-size:13px}
  .mobile-brand-degree{font-size:9px;color:var(--muted);font-weight:500;margin-left:-5px}
  .topbar{height:62px;padding:0 12px}
  .top-actions{gap:7px}
- .mobile-brand{height:calc(68px + env(safe-area-inset-bottom));padding:5px 5px env(safe-area-inset-bottom);background:var(--green);border-top:1px solid var(--line);justify-content:space-around}
- .mobile-brand button{flex:1;min-width:0;height:48px;align-content:center;gap:3px;font-size:9px;font-weight:550}
+ .mobile-brand{height:calc(64px + env(safe-area-inset-bottom));padding:4px 8px env(safe-area-inset-bottom);background:var(--green);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;justify-items:stretch;gap:4px}
+ .mobile-brand button{width:100%;min-width:0;height:48px;align-content:center;justify-items:center;gap:3px;font-size:10px;font-weight:550;border:1px solid transparent;border-radius:12px}
  .mobile-brand button span{white-space:nowrap}
- .mobile-brand .mobile-log-button{flex:0 0 58px;width:52px;height:52px;margin-top:-15px;border:1px solid var(--lime);border-radius:50%;background:var(--lime);color:#061510;box-shadow:0 0 22px rgb(67 242 179 / 28%)}
- .mobile-brand .mobile-log-button span{font-size:8px;font-weight:700}
+ .mobile-brand button.active{background:color-mix(in srgb,var(--lime) 12%,transparent);border-color:color-mix(in srgb,var(--lime) 22%,transparent)}
+ .mobile-brand .mobile-more-button.active{color:var(--lime)}
  .mobile-menu-overlay{position:fixed;inset:0;z-index:20;display:flex;background:rgb(0 0 0 / 58%);backdrop-filter:blur(5px)}
  .mobile-drawer{width:min(86vw,340px);height:100%;display:flex;flex-direction:column;padding:18px 15px max(16px,env(safe-area-inset-bottom));background:var(--green);color:white;border-right:1px solid var(--line);box-shadow:20px 0 70px rgb(0 0 0 / 25%);animation:drawer-in .18s ease-out}
  .mobile-drawer-header{display:flex;align-items:center;justify-content:space-between;padding:1px 4px 17px;border-bottom:1px solid rgb(159 190 172 / 20%)}
