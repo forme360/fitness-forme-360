@@ -98,3 +98,13 @@ html[data-theme="glow"] .provider-state{border-color:#205c49;color:#7ceac0}
  .mobile-drawer .icon-button{background:transparent;border-color:rgb(159 190 172 / 30%);color:#d4e4dc}
 }
 @keyframes drawer-in{from{transform:translateX(-14px);opacity:.65}to{transform:translateX(0);opacity:1}}
+
+/* Keep complex entry flows readable at every viewport width. */
+.plan-layout{grid-template-columns:minmax(0,900px);justify-content:center;align-items:start}
+.module-layout,.health-vault-layout,.health-model-layout,.integration-layout{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:start}
+.record-input{display:block;width:100%;min-width:0;min-height:40px;padding:10px 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface,#fff);color:var(--ink,#34463a);font:inherit;font-size:12px;outline:none}
+.record-input:focus{border-color:#72a98a;box-shadow:0 0 0 3px rgb(84 155 112 / 13%)}
+.health-model-form{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(max-width:1280px){.module-layout,.health-vault-layout,.health-model-layout,.integration-layout{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:1200px){.top-actions>.demo-pill{display:none}}
+@media(max-width:680px){.health-model-form{grid-template-columns:minmax(0,1fr)}}
