@@ -108,3 +108,6 @@ html[data-theme="glow"] .provider-state{border-color:#205c49;color:#7ceac0}
 @media(max-width:1280px){.module-layout,.health-vault-layout,.health-model-layout,.integration-layout{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:1200px){.top-actions>.demo-pill{display:none}}
 @media(max-width:680px){.health-model-form{grid-template-columns:minmax(0,1fr)}}
+
+.admin-overview{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);align-items:start;margin-top:14px}
+@media(max-width:760px){.admin-overview{grid-template-columns:minmax(0,1fr)}.admin-page{padding:24px 15px!important}.admin-heading{align-items:flex-start!important;gap:12px;flex-wrap:wrap}.admin-heading h1{font-size:25px!important}}
